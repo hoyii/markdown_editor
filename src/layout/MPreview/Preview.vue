@@ -4,16 +4,16 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import $bus from '../../state/mitt';
 
 const html = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-  if (html.value) {
-    html.value.innerHTML = `
-      <h1>Vue 3</h1>
-      <p>Vue 3 is the latest version of Vue.js</p>
-    `;
-  }
+  $bus.on('editor-content-change', (content: string) => {
+    if (html.value) {
+      html.value.innerHTML = content;
+    }
+  });
 });
 </script>
 

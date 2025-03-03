@@ -1,19 +1,25 @@
 <template>
-  <div ref="html" style="flex: 1"></div>
+  <div ref="previewer" style="flex: 1"></div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import $bus from '../../state/mitt';
+import Markdown2Html from '@hoyii/markdown2html';
 
-const html = ref<HTMLElement | null>(null);
+const previewer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
+  const markdown2html = new Markdown2Html();
   $bus.on('editor-content-change', (content: string) => {
-    if (html.value) {
-      html.value.innerHTML = content;
+    if (previewer.value) {
+      previewer.value.innerHTML = markdown2html.render(content);
     }
   });
+});
+
+onUnmounted(() => {
+  $bus.off('editor-content-change');
 });
 </script>
 

@@ -15,13 +15,25 @@ onMounted(() => {
     const view = new EditorView({
       parent: editor.value,
       doc: "# Hello\n\n```javascript\nlet x = 'y'\n```",
-      extensions: [basicSetup, markdown({ codeLanguages: languages })]
+      extensions: [
+        basicSetup,
+        markdown({ codeLanguages: languages }), // 监听编辑器内容变化
+        createTextChangeListener()
+      ]
     });
     // 设置编辑器的样式
     view.dom.style.height = `${window.innerHeight}px`;
-    view.scrollDOM.style.overflow = 'auto';
   }
 });
+
+// 用来监听文档内容变化的扩展
+function createTextChangeListener() {
+  return EditorView.updateListener.of((update) => {
+    if (update.docChanged) {
+      console.log('文本变化:', update.state.doc.toString());
+    }
+  });
+}
 </script>
 
 <style scoped></style>

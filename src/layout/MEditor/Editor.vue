@@ -6,16 +6,17 @@
 import { EditorView, basicSetup } from 'codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
-import { onMounted, ref } from 'vue';
-import $bus from '../../state/mitt';
+import { onMounted, ref, inject, type Ref } from 'vue';
 
 const editor = ref(null);
+
+const content = inject<Ref>('content');
 
 onMounted(() => {
   if (editor.value) {
     const view = new EditorView({
       parent: editor.value,
-      doc: "# Hello\n\n```javascript\nlet x = 'y'\n```",
+      doc: content!.value,
       extensions: [
         basicSetup,
         markdown({ codeLanguages: languages }), // 监听编辑器内容变化
@@ -31,8 +32,9 @@ onMounted(() => {
 function createTextChangeListener() {
   return EditorView.updateListener.of((update) => {
     if (update.docChanged) {
-      console.log('文本变化:', update.state.doc.toString());
-      $bus.emit('editor-content-change', update.state.doc.toString());
+      const newContent = update.state.doc.toString();
+      console.log('文本变化:', newContent);
+      content!.value = newContent;
     }
   });
 }

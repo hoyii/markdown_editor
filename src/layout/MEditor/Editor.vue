@@ -3,6 +3,7 @@ import { EditorView, basicSetup } from 'codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { onMounted, ref, inject, type Ref } from 'vue';
+import { oneLight } from './themes/one-light';
 import $bus from '../../state/mitt';
 
 const editor = ref(null);
@@ -18,6 +19,7 @@ onMounted(() => {
       doc: content!.value,
       extensions: [
         basicSetup,
+        oneLight,
         markdown({ codeLanguages: languages }), // 监听编辑器内容变化
         createTextChangeListener()
       ]

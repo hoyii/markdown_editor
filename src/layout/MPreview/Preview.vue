@@ -1,5 +1,5 @@
 <template>
-  <div ref="previewer" style="flex: 1"></div>
+  <div ref="previewer" class="markdown-body" style="flex: 1"></div>
 </template>
 
 <script setup lang="ts">
@@ -22,5 +22,12 @@ onMounted(() => {
   }
 });
 </script>
+
+<style>
+@import './themes/github-markdown-light.css';
+.markdown-body {
+  padding: 16px;
+}
+</style>
 
 <style scoped></style>

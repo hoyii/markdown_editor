@@ -10,12 +10,13 @@ const previewer = ref<HTMLElement | null>(null);
 
 const content = inject<Ref>('content');
 
+const markdown2html = new Markdown2Html();
+
 watch(content!, (newContent) => {
-  console.log('preview:', newContent);
+  previewer.value!.innerHTML = markdown2html.render(newContent);
 });
 
 onMounted(() => {
-  const markdown2html = new Markdown2Html();
   if (previewer.value) {
     previewer.value.innerHTML = markdown2html.render(content!.value);
   }

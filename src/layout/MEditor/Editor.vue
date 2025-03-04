@@ -1,7 +1,3 @@
-<template>
-  <div ref="editor" id="editor" style="flex: 1"></div>
-</template>
-
 <script setup lang="ts">
 import { EditorView, basicSetup } from 'codemirror';
 import { markdown } from '@codemirror/lang-markdown';
@@ -27,7 +23,9 @@ onMounted(() => {
       ]
     });
     // 设置编辑器的样式
-    view.dom.style.height = `${window.innerHeight}px`;
+    view.dom.style.height = `100%`;
+    // view.dom.style.width = `100%`;
+    // view.dom.style.overflow = 'hidden';
   }
 
   // 监听插入文本事件
@@ -71,5 +69,9 @@ function insertTextAtCursor(text: string, cursor_offset: number) {
   }
 }
 </script>
+
+<template>
+  <div ref="editor" id="editor"></div>
+</template>
 
 <style scoped></style>

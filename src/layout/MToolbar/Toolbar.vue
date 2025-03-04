@@ -60,6 +60,7 @@ const insertSyntax = (syntax: string, cursor_offset: number = syntax.length) => 
 <style scoped>
 .toolbar {
   display: flex;
+  flex-shrink: 0;
   gap: 5px;
   padding: 5px;
   background-color: #ffffff;

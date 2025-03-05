@@ -28,6 +28,9 @@
     <button @click="insertSyntax('> ')">
       <Quote :size="14" />
     </button>
+    <button @click="informPrint()">
+      <Printer :size="14" />
+    </button>
   </div>
 </template>
 
@@ -42,7 +45,8 @@ import {
   Link,
   Image,
   PencilLine,
-  Quote
+  Quote,
+  Printer
 } from 'lucide-vue-next';
 import $bus from '../../state/mitt';
 
@@ -54,6 +58,10 @@ import $bus from '../../state/mitt';
  */
 const insertSyntax = (syntax: string, cursor_offset: number = syntax.length) => {
   $bus.emit('insertSyntax', [syntax, cursor_offset]);
+};
+
+const informPrint = () => {
+  $bus.emit('printPdf');
 };
 </script>
 
